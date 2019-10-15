@@ -1,0 +1,30 @@
+get-attributes:
+  handler: src/functions/attribute/get-attributes.main
+  events:
+    - http:
+        path: attributes
+        method: get
+get-attribute:
+  handler: src/functions/attribute/get-attribute.main
+  events:
+    - http:
+        path: attribute/{id}
+        method: get
+put-attribute:
+  handler: src/functions/attribute/put-attribute.main
+  events:
+    - http:
+        path: attribute/{id}
+        method: put
+post-attribute:
+  handler: src/functions/attribute/post-attribute.main
+  events:
+    - http:
+        path: attribute
+        method: post
+delete-attribute:
+  handler: src/functions/attribute/delete-attribute.main
+  events:
+    - http:
+        path: attribute/{id}
+        method: delete

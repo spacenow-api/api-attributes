@@ -1,0 +1,30 @@
+get-attribute-types:
+  handler: src/functions/attribute-type/get-attribute-types.main
+  events:
+    - http:
+        path: attribute-types
+        method: get
+get-attribute-type:
+  handler: src/functions/attribute-type/get-attribute-type.main
+  events:
+    - http:
+        path: attribute-type/{id}
+        method: get
+put-attribute-type:
+  handler: src/functions/attribute-type/put-attribute-type.main
+  events:
+    - http:
+        path: attribute-type/{id}
+        method: put
+post-attribute-type:
+  handler: src/functions/attribute-type/post-attribute-type.main
+  events:
+    - http:
+        path: attribute-type
+        method: post
+delete-attribute-type:
+  handler: src/functions/attribute-type/delete-attribute-type.main
+  events:
+    - http:
+        path: attribute-type/{id}
+        method: delete

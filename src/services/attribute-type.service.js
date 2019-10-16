@@ -1,58 +1,58 @@
 'use strict'
 
-const { Attribute } = require('../../db/models')
+const { AttributeType } = require('../../db/models')
 const paginate = require('../helpers/paginate.utils')
 
-const getAttributes = async (pageIndex = 0, pageSize = 10) => {
+const getAttributeTypes = async (pageIndex = 0, pageSize = 10) => {
   try {
-    const data = await Attribute.findAndCountAll({ ...paginate(pageIndex, pageSize) })
+    const data = await AttributeType.findAndCountAll({ ...paginate(pageIndex, pageSize) })
     return data
   } catch (error) {
     throw error
   }
 }
 
-const getAttribute = async (id) => {
+const getAttributeType = async (id) => {
   const where = { where: { id } }
   try {
-    const data = await Attribute.findOne(where);
+    const data = await AttributeType.findOne(where);
     return data
   } catch (error) {
     throw error
   }
 }
 
-const putAttribute = async (id, value) => {
+const putAttributeType = async (id, value) => {
   const where = { where: { id } }
   try {
-    const valueToUpdate = await Attribute.findOne(where);
-    if (!valueToUpdate) throw new Error(`Attribute ${id} not found.`);
-    await Attribute.update(value, where)
+    const valueToUpdate = await AttributeType.findOne(where);
+    if (!valueToUpdate) throw new Error(`Attribute Type ${id} not found.`);
+    await AttributeType.update(value, where)
     return Object.assign(valueToUpdate, value)
   } catch (error) {
     throw error
   }
 }
 
-const postAttribute = async (value) => {
+const postAttributeType = async (value) => {
   try {
-    const data = await Attribute.create(value)
+    const data = await AttributeType.create(value)
     return data
   } catch (error) {
     throw error
   }
 }
 
-const deleteAttribute = async (id) => {
+const deleteAttributeType = async (id) => {
   const where = { where: { id } }
   try {
-    const valueToUpdate = await Attribute.findOne(where);
-    if (!valueToUpdate) throw new Error(`Attribute ${id} not found.`);
-    await Attribute.delete(where)
-    return Object.assign(`Attribute ${id} deleted.`)
+    const valueToUpdate = await AttributeType.findOne(where);
+    if (!valueToUpdate) throw new Error(`Attribute Type ${id} not found.`);
+    await AttributeType.delete(where)
+    return Object.assign(`Attribute Type ${id} deleted.`)
   } catch (error) {
     throw error
   }
 }
 
-module.exports = { getAttributes, getAttribute, putAttribute, postAttribute, deleteAttribute }
+module.exports = { getAttributeTypes, getAttributeType, putAttributeType, postAttributeType, deleteAttributeType }

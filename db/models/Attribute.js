@@ -9,13 +9,22 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       field: 'id'
     },
-    attributeCode: {
-      type: DataTypes.STRING,
-      field: 'attribute_code'
+    typeId: {
+      type: DataTypes.UUID,
+      field: 'type_id',
+      defaultValue: DataTypes.UUIDV4,
+      references: {
+        model: 'AttributeType',
+        key: 'id'
+      }
     },
-    attributeModel: {
+    code: {
       type: DataTypes.STRING,
-      field: 'attribute_model'
+      field: 'code'
+    },
+    model: {
+      type: DataTypes.STRING,
+      field: 'model'
     },
     frontendInput: {
       type: DataTypes.STRING,
@@ -48,7 +57,13 @@ module.exports = (sequelize, DataTypes) => {
       field: 'updated_at'
     }
   }, {
-    tableName: 'attribute'
+    tableName: 'attribute',
+    indexes: [
+      {
+        unique: true,
+        fields: ['attribute_type_id']
+      }
+    ]
   });
 
   Attribute.associate = (models) => {
@@ -57,6 +72,22 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id'
     });
   };
+
+  Attribute.beforeCreate((instance) => {
+    const a = "àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœøṕŕßśșțùúüûǘẃẍÿź·/_,:;";
+    const b = "aaaaaaaaceeeeghiiiimnnnooooooprssstuuuuuwxyz------";
+    const p = new RegExp(a.split("").join("|"), "g");
+    instance.code = instance.frontendLabel
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(p, c => b.charAt(a.indexOf(c)))
+      .replace(/&/g, "-and-")
+      .replace(/[^\w\-]+/g, "")
+      .replace(/\-\-+/g, "-")
+      .replace(/^-+/, "")
+      .replace(/-+$/, "");
+  })
 
   return Attribute;
 };

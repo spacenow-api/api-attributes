@@ -6,14 +6,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      attribute_type_id: {
+      type_id: {
         type: Sequelize.UUID,
         allowNull: false,
       },
-      attribute_code: {
+      code: {
         type: Sequelize.STRING
       },
-      attribute_model: {
+      model: {
         type: Sequelize.STRING
       },
       frontend_input: {

@@ -10,12 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       field: 'id'
     },
     code: {
-      type: DataTypes.STRING,
-      field: 'code'
+      type: DataTypes.INTEGER,
+      field: 'code',
+      unique: true
     },
     type: {
       type: DataTypes.STRING,
-      field: 'type'
+      field: 'type',
+      unique: true
     },
     createdAt: {
       allowNull: false,
@@ -31,5 +33,25 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'attribute_type'
   });
 
-  return Attribute;
+  AttributeType.beforeCreate((instance) => {
+    instance.code = Math.floor(Math.random() * Math.floor(999999));
+  })
+
+  AttributeType.beforeCreate((instance) => {
+    const a = "àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœøṕŕßśșțùúüûǘẃẍÿź·/_,:;";
+    const b = "aaaaaaaaceeeeghiiiimnnnooooooprssstuuuuuwxyz------";
+    const p = new RegExp(a.split("").join("|"), "g");
+    instance.type = instance.type
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(p, c => b.charAt(a.indexOf(c)))
+      .replace(/&/g, "-and-")
+      .replace(/[^\w\-]+/g, "")
+      .replace(/\-\-+/g, "-")
+      .replace(/^-+/, "")
+      .replace(/-+$/, "");
+  })
+
+  return AttributeType;
 };

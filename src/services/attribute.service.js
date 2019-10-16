@@ -12,6 +12,16 @@ const getAttributes = async (pageIndex = 0, pageSize = 10) => {
   }
 }
 
+const getAttributesByType = async (typeId, pageIndex = 0, pageSize = 10) => {
+  const where = { where: { typeId }, ...paginate(pageIndex, pageSize) }
+  try {
+    const data = await Attribute.findAndCountAll(where)
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 const getAttribute = async (id) => {
   const where = { where: { id } }
   try {
@@ -55,4 +65,4 @@ const deleteAttribute = async (id) => {
   }
 }
 
-module.exports = { getAttributes, getAttribute, putAttribute, postAttribute, deleteAttribute }
+module.exports = { getAttributes, getAttributesByType, getAttribute, putAttribute, postAttribute, deleteAttribute }

@@ -4,6 +4,12 @@ get-attributes:
     - http:
         path: attributes
         method: get
+get-attributes-by-type:
+  handler: src/functions/attribute/get-attributes-by-type.main
+  events:
+    - http:
+        path: attributes/{typeId}/type
+        method: get
 get-attribute:
   handler: src/functions/attribute/get-attribute.main
   events:
